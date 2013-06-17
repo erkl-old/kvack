@@ -65,7 +65,7 @@ function peek(path, opts) {
       }
 
       if (hash !== lastHash && time >= lastTime) {
-        var event = 'change'
+        var event = 'modify'
 
         if (lastHash == null) {
           event = 'create'
@@ -76,6 +76,7 @@ function peek(path, opts) {
         lastHash = hash
         lastTime = time
 
+        handle.emit('change', event)
         handle.emit(event)
       }
     })

@@ -1,9 +1,9 @@
-{ "name": "peek"
+{ "name": "kvack"
 , "description": "robust file watching"
 , "version": "0.0.0"
 , "repository":
   { "type": "git"
-  , "url": "http://github.com/erkl/peek.git"
+  , "url": "http://github.com/erkl/kvack.git"
   }
-, "main": "peek.js"
+, "main": "kvack.js"
 }

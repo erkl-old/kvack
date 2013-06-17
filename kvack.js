@@ -2,7 +2,7 @@ var events = require('events')
   , crypto = require('crypto')
   , fs = require('fs')
 
-function peek(path, opts) {
+function kvack(path, opts) {
   var watcher = new events.EventEmitter()
     , options =
       { persistent: true
@@ -125,4 +125,4 @@ function stat(path, callback) {
   stream.on('end', function () { callback(null, time, hash.digest('hex')) })
 }
 
-module.exports = peek
+module.exports = kvack

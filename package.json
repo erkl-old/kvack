@@ -1,6 +1,6 @@
 { "name": "kvack"
 , "description": "robust file watching"
-, "version": "0.0.0"
+, "version": "1.0.0"
 , "repository":
   { "type": "git"
   , "url": "http://github.com/erkl/kvack.git"

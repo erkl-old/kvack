@@ -3,7 +3,7 @@ var events = require('events')
   , fs = require('fs')
 
 function peek(path, opts) {
-  var handle = new events.EventEmitter()
+  var watcher = new events.EventEmitter()
     , options =
       { persistent: true
       , delay: 25
@@ -23,7 +23,7 @@ function peek(path, opts) {
       watcher = fs.watch(path, { persistent: options.persistent })
     } catch (err) {
       if (err.code !== 'ENOENT') {
-        handle.emit('error', err)
+        watcher.emit('error', err)
       }
 
       timeout = setTimeout(watch, options.delay)
@@ -32,7 +32,7 @@ function peek(path, opts) {
 
     watcher.on('error', function (err) {
       if (err.code !== 'ENOENT') {
-        handle.emit('error', err)
+        watcher.emit('error', err)
       }
       reset()
     })
@@ -61,7 +61,7 @@ function peek(path, opts) {
   function check() {
     stat(path, function (err, time, hash) {
       if (err != null && err.code !== 'ENOENT') {
-        handle.emit('error', err)
+        watcher.emit('error', err)
       }
 
       if (hash !== lastHash && time >= lastTime) {
@@ -76,8 +76,8 @@ function peek(path, opts) {
         lastHash = hash
         lastTime = time
 
-        handle.emit('change', event)
-        handle.emit(event)
+        watcher.emit('change', event)
+        watcher.emit(event)
       }
     })
   }
@@ -86,13 +86,13 @@ function peek(path, opts) {
     if (watcher != null) watcher.close()
     clearTimeout(timeout)
 
-    handle.closed = true
-    handle.emit('close')
+    watcher.closed = true
+    watcher.emit('close')
   }
 
   stat(path, function (err, time, hash) {
     if (err != null && err.code !== 'ENOENT') {
-      handle.emit('error', err)
+      watcher.emit('error', err)
     }
 
     lastTime = time
@@ -101,10 +101,10 @@ function peek(path, opts) {
     watch()
   })
 
-  handle.closed = false
-  handle.close = close
+  watcher.closed = false
+  watcher.close = close
 
-  return handle
+  return watcher
 }
 
 function stat(path, callback) {

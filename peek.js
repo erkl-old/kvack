@@ -5,7 +5,7 @@ var events = require('events')
 function peek(path, opts) {
   var handle = new events.EventEmitter()
     , options =
-      { persistent: false
+      { persistent: true
       , delay: 25
       }
 

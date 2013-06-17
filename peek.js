@@ -101,6 +101,7 @@ function peek(path, opts) {
     watch()
   })
 
+  watcher.path = path
   watcher.closed = false
   watcher.close = close
 
